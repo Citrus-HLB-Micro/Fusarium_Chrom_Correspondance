@@ -25,7 +25,7 @@ chrom_map <- function(indir) {
   agpdata <- agp_files %>% map_dfr(read_tsv, .id = "source", skip=2, 
                                    col_names = c("Ref", "Ref_Start", "Ref_End", "part_number","Type","Query","Query_Start","Query_End","Linkage")) %>% 
     filter(! str_detect(Ref,"^scaffold|^tig")) %>%
-    mutate(src = gsub('\\w+_\\w+_(\\S+)\\.agp','\\1',basename(source))) %>% 
+    mutate(src = gsub('\\S+_(\\S+)\\.agp','\\1',basename(source))) %>% 
     mutate(Chrom=gsub('\\.1_RagTag','',Ref)) %>% select(-c(source,Ref))
   source_names = agpdata %>% select(src) %>% distinct()
   
