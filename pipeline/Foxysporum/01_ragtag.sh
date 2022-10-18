@@ -1,10 +1,10 @@
 #!/usr/bin/bash -l
 
 module load ragtag
-OUT=scaffold
+OUT=scaffold/Foxy
 REF=ref_genomes/Foxysporum
 REXT=fna
-QUERY=Foxy_genomes
+QUERY=genomes/Foxysporum
 QEXT=sorted.fasta
 for ref in $(ls $REF/*.${REXT})
 do
