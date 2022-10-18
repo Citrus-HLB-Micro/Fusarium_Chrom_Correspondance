@@ -1,14 +1,14 @@
 library(ggplot2)
-library(purrr)
 library(tidyverse)
 library(fs)
 library(cowplot)
 species="Foxysporum"
+args <- commandArgs(trailingOnly = TRUE)
 if (length(args) >= 1 ) {
   species = args[1]
 }
 
-if (! file.exists("plots")){
+if (! file.exists("plots") ) {
   dir.create("plots")
 }
 plotdir=sprintf("plots/%s",species)
