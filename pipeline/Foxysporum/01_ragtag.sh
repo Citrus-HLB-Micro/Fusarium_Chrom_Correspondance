@@ -1,7 +1,8 @@
 #!/usr/bin/bash -l
 
 module load ragtag
-OUT=scaffold/Foxy
+
+OUT=scaffold/Foxysporum
 REF=ref_genomes/Foxysporum
 REXT=fna
 QUERY=genomes/Foxysporum
