@@ -3,8 +3,20 @@ library(purrr)
 library(tidyverse)
 library(fs)
 library(cowplot)
+species="Foxysporum"
+if (length(args) >= 1 ) {
+  species = args[1]
+}
 
-data_dir = "scaffold_agp"
+if (! file.exists("plots")){
+  dir.create("plots")
+}
+plotdir=sprintf("plots/%s",species)
+if (! file.exists(plotdir) ){
+  dir.create(plotdir)
+}
+
+data_dir = paste0("scaffold_agp/",species)
 refgenome = fs::dir_ls(data_dir)
 
 chrom_map <- function(indir) { 
@@ -13,7 +25,7 @@ chrom_map <- function(indir) {
   agpdata <- agp_files %>% map_dfr(read_tsv, .id = "source", skip=2, 
                                    col_names = c("Ref", "Ref_Start", "Ref_End", "part_number","Type","Query","Query_Start","Query_End","Linkage")) %>% 
     filter(! str_detect(Ref,"^scaffold|^tig")) %>%
-    mutate(src = gsub('Fusarium_oxysporum_(\\S+)\\.agp','\\1',basename(source))) %>% 
+    mutate(src = gsub('\\w+_\\w+_(\\S+)\\.agp','\\1',basename(source))) %>% 
     mutate(Chrom=gsub('\\.1_RagTag','',Ref)) %>% select(-c(source,Ref))
   source_names = agpdata %>% select(src) %>% distinct()
   
@@ -27,6 +39,6 @@ chrom_map <- function(indir) {
   p <- ggplot(chromobs, aes(src, Chrom, fill=present)) + 
     geom_tile() +
     theme_cowplot(12)
-  save_plot(sprintf("plots/ChromPresAbsence_%s.pdf",refname), p,base_height=8,base_width=15)
+  save_plot(sprintf("%s/ChromPresAbsence_%s.pdf",plotdir,refname), p,base_height=8,base_width=15)
 }
 lapply(refgenome,chrom_map)
