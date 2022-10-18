@@ -1,3 +1,5 @@
 *.scaffold.err
 *.scaffold.asm.paf.log
 *.scaffold.fasta
+*.sorted.fasta
+*.fasta.fai
