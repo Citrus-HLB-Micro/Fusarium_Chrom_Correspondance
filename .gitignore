@@ -3,3 +3,4 @@
 *.scaffold.fasta
 *.sorted.fasta
 *.fasta.fai
+.Rproj.user
